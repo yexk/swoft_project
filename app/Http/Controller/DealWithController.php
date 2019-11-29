@@ -1,12 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controller;
 
 use Swoft\Http\Message\ContentType;
+use Swoft\Http\Message\Request;
 use Swoft\Http\Message\Response;
 use Swoft\Http\Server\Annotation\Mapping\Controller;
 use Swoft\Http\Server\Annotation\Mapping\RequestMapping;
 use Swoft\Http\Server\Annotation\Mapping\RequestMethod;
+use Swoft\Redis\Redis;
+use Swoft\Task\Task;
 
 /**
  * Class DealWithController
@@ -19,16 +24,26 @@ class DealWithController
 {
     /**
      * @RequestMapping("gitwebhook", method=RequestMethod::POST)
-     * @param string $name
      *
      * @return Response
      * @throws SwoftException
      */
-    public function gitWebHook(): Response
+    public function gitWebHook(Request $request): Response
     {
-        $request = context()->getRequest();
         $res = $request->input();
-        return context()->getResponse()->withContentType(ContentType::JSON)->withContent(json_encode($res));
+        Task::co('UpdateNodeTask', 'build');
+        
+        $r_res = [];
+        $r_res['time'] = time();
+        $r_res['head_commit'] = $res['head_commit'];
+        $r_res['commits'] = [];
+        if (!empty($res['commits'])) {
+            foreach ($res['commits'] as $v) {
+                array_push($r_res['commits'], ['message' => $v['message'], 'timestamp' => $v['timestamp'], 'author' => $v['committer']]);
+            }
+        }
+
+        Redis::hset('build', date('YmdHis'), json_encode($r_res));
+        return context()->getResponse()->withContentType(ContentType::TEXT)->withContent('更新成功！' . '[' . date('Y-m-d H:i:s') . ']');
     }
-    
 }
