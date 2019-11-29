@@ -36,7 +36,7 @@ class Application extends SwoftApplication
         $config = parent::getCLoggerConfig();
 
         // False: Dont print log to terminal
-        $config['enable'] = true;
+        $config['enable'] = env('CLOGGER_ENABLE', false);
 
         return $config;
     }

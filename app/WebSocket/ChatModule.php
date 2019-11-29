@@ -14,7 +14,7 @@ use App\WebSocket\Chat\HomeController;
 use Swoft\Http\Message\Request;
 use Swoft\WebSocket\Server\Annotation\Mapping\OnOpen;
 use Swoft\WebSocket\Server\Annotation\Mapping\WsModule;
-use Swoft\WebSocket\Server\MessageParser\JsonParser;
+use Swoft\WebSocket\Server\MessageParser\TokenTextParser;
 use function server;
 
 /**
@@ -22,7 +22,7 @@ use function server;
  *
  * @WsModule(
  *     "/chat",
- *     messageParser=JsonParser::class,
+ *     messageParser=TokenTextParser::class,
  *     controllers={HomeController::class}
  * )
  */
