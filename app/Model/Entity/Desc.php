@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
-/**
- * This file is part of Swoft.
- *
- * @link     https://swoft.org
- * @document https://swoft.org/docs
- * @contact  group@swoft.org
- * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
- */
+
 
 namespace App\Model\Entity;
 
@@ -15,7 +8,9 @@ use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
 
+
 /**
+ * user desc
  * Class Desc
  *
  * @since 2.0
@@ -25,18 +20,43 @@ use Swoft\Db\Eloquent\Model;
 class Desc extends Model
 {
     /**
+     * 
      * @Id()
-     *
      * @Column()
+     *
      * @var int
      */
     private $id;
 
     /**
+     * 
+     *
      * @Column()
+     *
      * @var string
      */
     private $desc;
+
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $desc
+     *
+     * @return void
+     */
+    public function setDesc(string $desc): void
+    {
+        $this->desc = $desc;
+    }
 
     /**
      * @return int
@@ -47,14 +67,6 @@ class Desc extends Model
     }
 
     /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getDesc(): ?string
@@ -62,11 +74,4 @@ class Desc extends Model
         return $this->desc;
     }
 
-    /**
-     * @param string $desc
-     */
-    public function setDesc(string $desc): void
-    {
-        $this->desc = $desc;
-    }
 }

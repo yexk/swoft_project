@@ -72,9 +72,11 @@ return [
     ],
     'db'                => [
         'class'    => Database::class,
-        'dsn'      => 'mysql:dbname=test;host=127.0.0.1',
+        'dsn'      => 'mysql:dbname=yexkApi;host=127.0.0.1',
         'username' => 'root',
-        'password' => 'swoft123456',
+        'password' => 'root',
+        'charset'  => 'utf8mb4',
+        'prefix'   => 'yexk_',
     ],
     'db2'               => [
         'class'      => Database::class,

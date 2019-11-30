@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
-/**
- * This file is part of Swoft.
- *
- * @link     https://swoft.org
- * @document https://swoft.org/docs
- * @contact  group@swoft.org
- * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
- */
+
 
 namespace App\Model\Entity;
 
@@ -15,8 +8,9 @@ use Swoft\Db\Annotation\Mapping\Entity;
 use Swoft\Db\Annotation\Mapping\Id;
 use Swoft\Db\Eloquent\Model;
 
+
 /**
- *
+ * user count comment ...
  * Class Count
  *
  * @since 2.0
@@ -25,102 +19,85 @@ use Swoft\Db\Eloquent\Model;
  */
 class Count extends Model
 {
-    protected const UPDATED_AT = 'update_time';
-
-    protected const CREATED_AT = 'create_time';
-
     /**
-     *
+     * primary
      * @Id()
      * @Column()
-     * @var int|null
+     *
+     * @var int
      */
     private $id;
 
     /**
-     *
+     * user table primary
      *
      * @Column(name="user_id", prop="userId")
-     * @var int|null
+     *
+     * @var int
      */
     private $userId;
 
     /**
-     *
+     * create time
      *
      * @Column(name="create_time", prop="createTime")
-     * @var int|null
+     *
+     * @var int
      */
     private $createTime;
 
     /**
-     *
-     *
-     * @Column()
-     * @var string|null
-     */
-    private $attributes;
-
-    /**
-     *
+     * update timestamp
      *
      * @Column(name="update_time", prop="updateTime")
-     * @var string|null
+     *
+     * @var string
      */
     private $updateTime;
 
+
     /**
-     * @param int|null $id
+     * @param int $id
      *
      * @return void
      */
-    public function setId(?int $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
     /**
-     * @param int|null $userId
+     * @param int $userId
      *
      * @return void
      */
-    public function setUserId(?int $userId): void
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
     }
 
     /**
-     * @param int|null $createTime
+     * @param int $createTime
      *
      * @return void
      */
-    public function setCreateTime(?int $createTime): void
+    public function setCreateTime(int $createTime): void
     {
         $this->createTime = $createTime;
     }
 
     /**
-     * @param string|null $attributes
+     * @param string $updateTime
      *
      * @return void
      */
-    public function setAttributes(?string $attributes): void
-    {
-        $this->attributes = $attributes;
-    }
-
-    /**
-     * @param string|null $updateTime
-     *
-     * @return void
-     */
-    public function setUpdateTime(?string $updateTime): void
+    public function setUpdateTime(string $updateTime): void
     {
         $this->updateTime = $updateTime;
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getId(): ?int
     {
@@ -128,7 +105,7 @@ class Count extends Model
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getUserId(): ?int
     {
@@ -136,7 +113,7 @@ class Count extends Model
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getCreateTime(): ?int
     {
@@ -144,18 +121,11 @@ class Count extends Model
     }
 
     /**
-     * @return string|null
-     */
-    public function getAttributes(): ?string
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * @return string|null
+     * @return string
      */
     public function getUpdateTime(): ?string
     {
         return $this->updateTime;
     }
+
 }
