@@ -31,7 +31,7 @@ class DealWithController
     public function gitWebHook(Request $request): Response
     {
         $res = $request->input();
-        Task::co('UpdateNodeTask', 'build');
+        Task::async('UpdateNodeTask', 'build');
         
         $r_res = [];
         $r_res['time'] = time();
