@@ -1,4 +1,5 @@
 <?php
+
 /**
  * common function 
  * @author Yexk <yexk@yexk.cn>
@@ -16,10 +17,11 @@ use Swoft\Http\Message\Response;
  * @param string $msg 消息
  * @return Response
  */
-function returnJson($data = [],int $code = 200,string $msg = ''): Response {
+function returnJson($data = [], string $msg = '', int $code = 200): Response
+{
     $r = [];
     $r['code'] = $code;
-    $r['msg'] = $msg ?? '获取成功';
+    $r['msg'] = !empty($msg) ? $msg : '获取成功';
     $r['data'] = $data;
     return context()->getResponse()->withContentType(ContentType::JSON)->withContent(json_encode($r));
 }
