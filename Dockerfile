@@ -9,9 +9,7 @@
 # ------------------------------------------------------------------------------------
 # @build-example docker build . -f Dockerfile -t swoft/swoft
 #
-FROM php:7.2
-
-LABEL maintainer="inhere <in.798@qq.com>" version="2.0"
+FROM php:7.4
 
 # --build-arg timezone=Asia/Shanghai
 ARG timezone
@@ -23,13 +21,13 @@ ARG work_user=www-data
 ENV APP_ENV=${app_env:-"prod"} \
     TIMEZONE=${timezone:-"Asia/Shanghai"} \
     PHPREDIS_VERSION=4.3.0 \
-    SWOOLE_VERSION=4.4.5 \
+    SWOOLE_VERSION=4.5.2 \
     COMPOSER_ALLOW_SUPERUSER=1
 
 # Libs -y --no-install-recommends
 RUN apt-get update \
     && apt-get install -y \
-        curl wget git zip unzip less vim procps lsof tcpdump htop openssl \
+        curl wget git zip unzip less vim procps lsof tcpdump htop openssl apt-utils automake libtool \
         libz-dev \
         libssl-dev \
         libnghttp2-dev \
@@ -37,12 +35,31 @@ RUN apt-get update \
         libjpeg-dev \
         libpng-dev \
         libfreetype6-dev \
+# Install oniguruma 
+    && wget https://github.com/kkos/oniguruma/archive/v6.9.5.tar.gz -O oniguruma-6.9.5.tar.gz  \
+    && tar -zxvf oniguruma-6.9.5.tar.gz \
+    && ( \
+        cd oniguruma-6.9.5 \
+        && ./autogen.sh && ./configure \
+        && make && make install \
+    ) \
+    && rm oniguruma-6.9.5.tar.gz && rm -r oniguruma-6.9.5 \
+# Install libzip 
+    && wget https://nih.at/libzip/libzip-1.2.0.tar.gz -O libzip-1.2.0.tar.gz  \
+    && tar -zxvf libzip-1.2.0.tar.gz \
+    && ( \
+        cd libzip-1.2.0 \
+        && ./configure \
+        && make && make install \
+    ) \
+    && export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig/" \
+    && rm libzip-1.2.0.tar.gz && rm -r libzip-1.2.0 \
 # Install PHP extensions
     && docker-php-ext-install \
        bcmath gd pdo_mysql mbstring sockets zip sysvmsg sysvsem sysvshm
 
 # Install composer
-Run curl -sS https://getcomposer.org/installer | php \
+RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && composer self-update --clean-backups \
 # Install redis extension
