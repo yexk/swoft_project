@@ -62,6 +62,9 @@ RUN apt-get update \
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && composer self-update --clean-backups \
+# 如果是中国区，加上这个国内源
+    && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
+
 # Install redis extension
     && wget http://pecl.php.net/get/redis-${PHPREDIS_VERSION}.tgz -O /tmp/redis.tar.tgz \
     && pecl install /tmp/redis.tar.tgz \
@@ -90,13 +93,14 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && echo "[Date]\ndate.timezone=${TIMEZONE}" > /usr/local/etc/php/conf.d/timezone.ini
 
 # Install composer deps
-ADD . /var/www/swoft
-RUN  cd /var/www/swoft \
-    && composer install \
-    && composer clearcache
+# ADD . /var/www/swoft
+# RUN  cd /var/www/swoft \
+#     && composer install \
+#     && composer clearcache
 
 WORKDIR /var/www/swoft
 EXPOSE 18306 18307 18308
 
 # ENTRYPOINT ["php", "/var/www/swoft/bin/swoft", "http:start"]
-CMD ["php", "/var/www/swoft/bin/swoft", "http:start"]
+# CMD ["php", "/var/www/swoft/bin/swoft", "http:start"]
+CMD ["php", "-S", "127.0.0.1:13333"]
