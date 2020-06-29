@@ -72,17 +72,17 @@ return [
     ],
     'db'                => [
         'class'    => Database::class,
-        'dsn'      => 'mysql:dbname=yexkApi;host=127.0.0.1',
+        'dsn'      => 'mysql:dbname=yexk;host=mysql',
         'username' => 'root',
-        'password' => 'root',
+        'password' => '123456',
         'charset'  => 'utf8mb4',
         'prefix'   => 'yexk_',
     ],
     'db2'               => [
         'class'      => Database::class,
-        'dsn'        => 'mysql:dbname=test2;host=127.0.0.1',
+        'dsn'        => 'mysql:dbname=yexk;host=mysql',
         'username'   => 'root',
-        'password'   => 'swoft123456',
+        'password'   => '123456',
 //        'dbSelector' => bean(DbSelector::class)
     ],
     'db2.pool' => [
@@ -91,9 +91,9 @@ return [
     ],
     'db3'               => [
         'class'    => Database::class,
-        'dsn'      => 'mysql:dbname=test2;host=127.0.0.1',
+        'dsn'      => 'mysql:dbname=yexk;host=mysql',
         'username' => 'root',
-        'password' => 'swoft123456'
+        'password' => '123456'
     ],
     'db3.pool'          => [
         'class'    => Pool::class,
@@ -104,11 +104,11 @@ return [
     ],
     'redis'             => [
         'class'    => RedisDb::class,
-        'host'     => '127.0.0.1',
+        'host'     => 'redis',
         'port'     => 6379,
         'database' => 0,
         'option'   => [
-            'prefix' => 'swoft:'
+            'prefix' => 'yexk:'
         ]
     ],
     'user'              => [
