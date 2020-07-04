@@ -8,6 +8,7 @@
  * @license  https://github.com/swoft-cloud/swoft/blob/master/LICENSE
  */
 use App\Common\DbSelector;
+use App\Common\RpcProvider;
 use App\Process\MonitorProcess;
 use Swoft\Crontab\Process\CrontabProcess;
 use Swoft\Db\Pool;
@@ -121,7 +122,8 @@ return [
             'write_timeout'   => 10.0,
             'read_timeout'    => 0.5,
         ],
-        'packet'  => bean('rpcClientPacket')
+        'packet'  => bean('rpcClientPacket'),
+        'provider' => bean(RpcProvider::class)
     ],
     'user.pool'         => [
         'class'  => ServicePool::class,
@@ -162,5 +164,8 @@ return [
     ],
     'cliRouter'         => [
         // 'disabledGroups' => ['demo', 'test'],
+    ],
+    'consul' => [
+        'host' => 'consul'
     ]
 ];
