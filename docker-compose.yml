@@ -8,10 +8,10 @@ services:
     environment:
       - APP_ENV=dev
       - TIMEZONE=Asia/Shanghai
-    restart: always
     depends_on:
       - mysql
       - redis
+      - consul
     ports:
       - "18306:18306"
       - "18307:18307"
@@ -30,7 +30,6 @@ services:
       - "13306:3306"
     volumes:
       - ./runtime/data/mysql:/var/lib/mysql
-    restart: always
 
   redis:
     container_name: redis-srv
@@ -39,4 +38,11 @@ services:
       - "16379:6379"
     sysctls:
       net.core.somaxconn: 65535
-    restart: always
+    
+  consul:
+    image: consul:1.8.0
+    container_name: consul-srv
+    environment: 
+      - CONSUL_BIND_INTERFACE:eth0
+    ports:
+      - "18500:8500"
