@@ -49,7 +49,7 @@ class RegisterServiceListener implements EventHandlerInterface
             'Tags'              => [
                 'http'
             ],
-            'Address'           => '127.0.0.1',
+            'Address'           => 'swoft',
             'Port'              => $httpServer->getPort(),
             'Meta'              => [
                 'version' => '1.0'

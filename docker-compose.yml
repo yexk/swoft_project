@@ -38,11 +38,54 @@ services:
       - "16379:6379"
     sysctls:
       net.core.somaxconn: 65535
-    
+
   consul:
     image: consul:1.8.0
     container_name: consul-srv
-    environment: 
+    environment:
       - CONSUL_BIND_INTERFACE:eth0
     ports:
       - "18500:8500"
+
+  go:
+    image: golang:1.14.4-stretch
+    container_name: golang-srv
+    volumes:
+      - ./go:/go/src
+    tty: true
+    stdin_open: true
+
+  mq:
+    image: rabbitmq:3.8.5
+    container_name: rabbitmq-srv
+    ports: 
+      - "15672:5672"
+    
+  kong-database:
+    image: postgres:9.6
+    ports: 
+      - "5432:5432"
+    environment: 
+      - "POSTGRES_USER=kong"
+      - "POSTGRES_DB=kong"
+      - "POSTGRES_PASSWORD=kong"
+
+  kong:
+    image: kong:2.0.5-alpine
+    container_name: kong-srv
+    depends_on: 
+      - kong-database
+    ports: 
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+    environment: 
+      - "KONG_DATABASE=postgres"
+      - "KONG_PG_HOST=kong-database"
+      - "KONG_PG_DATABASE=kong"
+      - "KONG_PG_USER=kong"
+      - "KONG_PG_PASSWORD=kong"
+      - "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl"
+    # command: "kong migrations bootstrap"
+    

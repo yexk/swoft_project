@@ -10,7 +10,10 @@
 
 namespace App\Http\Controller;
 
+use App\Common\RpcProvider;
 use Swoft;
+use Swoft\Bean\Annotation\Mapping\Inject;
+use Swoft\Consul\Agent;
 use Swoft\Exception\SwoftException;
 use Swoft\Http\Message\ContentType;
 use Swoft\Http\Message\Response;
@@ -26,6 +29,13 @@ use function context;
  */
 class HomeController
 {
+    /**
+     * @Inject()
+     *
+     * @var Agent
+     */
+    private $agent;
+
     /**
      * @RequestMapping("/")
      * @throws Throwable
@@ -47,6 +57,8 @@ class HomeController
      */
     public function hi(): Response
     {
+        $res = $this->agent->services();
+        var_dump($res);
         return context()->getResponse()->withContent('hi');
     }
 
